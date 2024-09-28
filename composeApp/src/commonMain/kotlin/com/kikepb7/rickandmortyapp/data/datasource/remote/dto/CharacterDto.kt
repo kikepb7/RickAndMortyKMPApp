@@ -8,12 +8,14 @@ data class CharacterDto(
     val id: Int,
     val status: String,
     val image: String,
+    val name: String
 ) {
     fun dtoToCharacterModel(): CharacterModel {
         return CharacterModel(
             id = id,
             isAlive = status.lowercase() == "alive",
-            image = image
+            image = image,
+            name = name
         )
     }
 }

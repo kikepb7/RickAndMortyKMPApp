@@ -63,6 +63,10 @@ kotlin {
 
             // VIEWMODEL
             implementation(libs.viewmodel.compose)
+
+            // COIL
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor)
         }
         iosMain.dependencies {
             // KTOR
