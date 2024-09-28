@@ -1,4 +1,4 @@
-package com.kikepb7.rickandmortyapp.data.dto
+package com.kikepb7.rickandmortyapp.data.datasource.remote.dto
 
 import com.kikepb7.rickandmortyapp.domain.feature.characters.model.CharacterModel
 import kotlinx.serialization.Serializable

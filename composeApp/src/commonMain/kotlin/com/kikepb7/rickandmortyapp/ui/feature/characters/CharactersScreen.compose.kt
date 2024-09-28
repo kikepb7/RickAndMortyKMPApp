@@ -1,12 +1,19 @@
 package com.kikepb7.rickandmortyapp.ui.feature.characters
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
@@ -16,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
@@ -24,23 +32,147 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.paging.LoadState
+import app.cash.paging.compose.LazyPagingItems
+import app.cash.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import com.kikepb7.rickandmortyapp.domain.feature.characters.model.CharacterModel
 import com.kikepb7.rickandmortyapp.ui.core.extensions.vertical
+import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
+import rickandmortyapp.composeapp.generated.resources.Res
+import rickandmortyapp.composeapp.generated.resources.rickandmorty_placeholder
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
 fun CharactersScreen() {
     val charactersViewModel = koinViewModel<CharactersViewModel>()
     val state by charactersViewModel.state.collectAsState()
+    val characters = state.characters.collectAsLazyPagingItems()
 
-    Column(
+    CharactersGridList(characters = characters, state = state)
+}
+
+@Composable
+fun CharactersGridList(
+    characters: LazyPagingItems<CharacterModel>,
+    state: CharactersState
+) {
+    LazyVerticalGrid(
         modifier = Modifier
             .fillMaxSize()
+            .padding(horizontal = 16.dp),
+        columns = GridCells.Fixed(count = 2),
+        horizontalArrangement = Arrangement.spacedBy(space = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(space = 16.dp)
     ) {
-        CharacterOfTheDay(characterModel = state.characterOfTheDay)
+        item(span = { GridItemSpan(currentLineSpan = 2) }) {
+            CharacterOfTheDay(characterModel = state.characterOfTheDay)
+        }
+
+        when {
+            characters.loadState.refresh is LoadState.Loading && characters.itemCount == 0 -> {
+                // Initial
+                item(span = { GridItemSpan(currentLineSpan = 2) }) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .size(size = 64.dp),
+                            color = Color.Red
+                        )
+                    }
+                }
+            }
+
+            characters.loadState.refresh is LoadState.NotLoading && characters.itemCount == 0 -> {
+                // Empty list
+                item {
+                    Text(text = "No characters to show :/")
+                }
+            }
+
+            else -> {
+                items(count = characters.itemCount) { position ->
+                    characters[position]?.let { characterModel ->
+                        CharacterItemList(characterModel = characterModel)
+                    }
+                }
+                if (characters.loadState.append is LoadState.Loading) {
+                    item(span = { GridItemSpan(currentLineSpan = 2) }) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .height(100.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .size(size = 64.dp),
+                                color = Color.Red
+                            )
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun CharacterItemList(characterModel: CharacterModel) {
+    Box(
+        modifier = Modifier
+            .clip(shape = RoundedCornerShape(percent = 24))
+            .border(
+                width = 2.dp,
+                color = Color.Green,
+                shape = RoundedCornerShape(
+                    topStartPercent = 0,
+                    topEndPercent = 24,
+                    bottomEndPercent = 0,
+                    bottomStartPercent = 24
+                )
+            )
+            .fillMaxSize()
+            .clickable { },
+        contentAlignment = Alignment.BottomCenter
+    ) {
+        AsyncImage(
+            model = characterModel.image,
+            contentDescription = "Character image item list",
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(150.dp),
+            placeholder = painterResource(resource = Res.drawable.rickandmorty_placeholder)
+        )
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(60.dp)
+                .background(
+                    brush = Brush
+                        .verticalGradient(
+                            colors = listOf(
+                                Color.Black.copy(alpha = 0f),
+                                Color.Black.copy(alpha = 0.6f),
+                                Color.Black.copy(alpha = 1f)
+                            )
+                        )
+                ),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = characterModel.name,
+                color = Color.White,
+                fontSize = 18.sp
+            )
+        }
     }
 }
 
@@ -56,9 +188,10 @@ fun CharacterOfTheDay(
     ) {
         if (characterModel == null) {
             Box(
+                modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(color = Color.Green)
             }
         } else {
             Box(
@@ -92,6 +225,7 @@ fun CharacterOfTheDay(
                     overflow = TextOverflow.Ellipsis,
                     modifier = Modifier
                         .padding(horizontal = 24.dp, vertical = 16.dp)
+                        .fillMaxHeight()
                         .vertical()
                         .rotate(degrees = -90f)
                 )
