@@ -1,4 +1,4 @@
-package com.kikepb7.rickandmortyapp.ui.home
+package com.kikepb7.rickandmortyapp.ui.feature
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.NavigationBar

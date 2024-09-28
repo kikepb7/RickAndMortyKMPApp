@@ -9,6 +9,6 @@ class ApiService(
     private val httpClient: HttpClient
 ) {
     suspend fun getSingleCharacter(id: String): CharacterDto {
-        return httpClient.get("/api/characters/$id").body()
+        return httpClient.get("/api/character/$id").body()
     }
 }

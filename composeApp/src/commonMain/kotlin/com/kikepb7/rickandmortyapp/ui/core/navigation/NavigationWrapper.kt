@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.kikepb7.rickandmortyapp.ui.home.HomeScreenView
+import com.kikepb7.rickandmortyapp.ui.feature.HomeScreenView
 
 @Composable
 fun NavigationWrapper() {

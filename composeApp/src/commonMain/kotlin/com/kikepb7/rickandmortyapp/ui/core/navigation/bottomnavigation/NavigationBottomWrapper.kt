@@ -5,8 +5,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.kikepb7.rickandmortyapp.ui.core.navigation.Routes
-import com.kikepb7.rickandmortyapp.ui.home.characters.CharactersScreen
-import com.kikepb7.rickandmortyapp.ui.home.episodes.EpisodesScreen
+import com.kikepb7.rickandmortyapp.ui.feature.characters.CharactersScreen
+import com.kikepb7.rickandmortyapp.ui.feature.episodes.EpisodesScreen
 
 @Composable
 fun NavigationBottomWrapper(

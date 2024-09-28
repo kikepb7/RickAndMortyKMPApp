@@ -60,6 +60,9 @@ kotlin {
             implementation(libs.koin.compose)
             implementation(libs.koin.core)
             implementation(libs.koin.compose.viewmodel)
+
+            // VIEWMODEL
+            implementation(libs.viewmodel.compose)
         }
         iosMain.dependencies {
             // KTOR
