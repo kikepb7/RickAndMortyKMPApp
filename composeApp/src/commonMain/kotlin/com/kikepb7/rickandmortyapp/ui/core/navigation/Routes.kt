@@ -5,4 +5,5 @@ sealed class Routes (val route: String) {
 
     data object Episodes: Routes("episodes")
     data object Characters: Routes("characters")
+    data object Locations: Routes("locations")
 }

@@ -14,11 +14,12 @@ import androidx.navigation.compose.rememberNavController
 import com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation.BottomBarItem
 import com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation.BottomBarItem.Characters
 import com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation.BottomBarItem.Episodes
+import com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation.BottomBarItem.Locations
 import com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation.NavigationBottomWrapper
 
 @Composable
 fun HomeScreenView() {
-    val items = listOf(Episodes(), Characters())
+    val items = listOf(Episodes(), Characters(), Locations())
     val navController = rememberNavController()
 
     Scaffold(bottomBar = { BottomNavigation(items = items, navController = navController) }) {

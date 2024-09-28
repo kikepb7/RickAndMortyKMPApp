@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.kikepb7.rickandmortyapp.ui.core.navigation.Routes
 import com.kikepb7.rickandmortyapp.ui.feature.characters.CharactersScreen
 import com.kikepb7.rickandmortyapp.ui.feature.episodes.EpisodesScreen
+import com.kikepb7.rickandmortyapp.ui.feature.locations.LocationsScreen
 
 @Composable
 fun NavigationBottomWrapper(
@@ -19,6 +20,10 @@ fun NavigationBottomWrapper(
 
         composable(route = Routes.Characters.route) {
             CharactersScreen()
+        }
+
+        composable(route = Routes.Locations.route) {
+            LocationsScreen()
         }
     }
 }

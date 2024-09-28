@@ -2,6 +2,7 @@ package com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -26,6 +27,14 @@ sealed class BottomBarItem {
         override val title: String = "Characters",
         override val icon: @Composable () -> Unit = {
             Icon(imageVector = Icons.Default.Person, null)
+        }
+    ) : BottomBarItem()
+
+    data class Locations(
+        override val route: String = Routes.Locations.route,
+        override val title: String = "Locations",
+        override val icon: @Composable () -> Unit = {
+            Icon(imageVector = Icons.Default.LocationOn, null)
         }
     ) : BottomBarItem()
 }

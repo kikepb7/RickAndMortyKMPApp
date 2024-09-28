@@ -2,7 +2,11 @@ package com.kikepb7.rickandmortyapp.di
 
 import com.kikepb7.rickandmortyapp.data.datasource.remote.ApiService
 import com.kikepb7.rickandmortyapp.data.repository.CharactersRepositoryImpl
+import com.kikepb7.rickandmortyapp.data.repository.EpisodesRepositoryImpl
+import com.kikepb7.rickandmortyapp.data.repository.LocationsRepositoryImpl
 import com.kikepb7.rickandmortyapp.domain.feature.characters.CharactersRepository
+import com.kikepb7.rickandmortyapp.domain.feature.episodes.EpisodesRepository
+import com.kikepb7.rickandmortyapp.domain.feature.locations.LocationsRepository
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -30,4 +34,6 @@ val dataModule = module {
 
     factoryOf(::ApiService)
     factory <CharactersRepository> { CharactersRepositoryImpl(api = get()) }
+    factory <EpisodesRepository> { EpisodesRepositoryImpl(api = get()) }
+    factory <LocationsRepository> { LocationsRepositoryImpl(api = get()) }
 }
