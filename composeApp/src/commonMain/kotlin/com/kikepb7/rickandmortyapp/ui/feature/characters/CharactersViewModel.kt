@@ -3,6 +3,7 @@ package com.kikepb7.rickandmortyapp.ui.feature.characters
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.kikepb7.rickandmortyapp.domain.feature.characters.CharactersRepository
 import com.kikepb7.rickandmortyapp.domain.feature.characters.model.CharacterModel
 import com.kikepb7.rickandmortyapp.domain.feature.characters.usecase.GetRandomCharacter
@@ -41,7 +42,7 @@ class CharactersViewModel(
     private fun getAllCharacters() {
         _state.update { state ->
             state.copy(
-                characters = charactersRepository.getAllCharacters()
+                characters = charactersRepository.getAllCharacters().cachedIn(scope = viewModelScope)
             )
         }
     }
