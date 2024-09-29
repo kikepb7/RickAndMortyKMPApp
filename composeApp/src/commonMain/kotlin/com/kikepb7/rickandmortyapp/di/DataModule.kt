@@ -2,6 +2,7 @@ package com.kikepb7.rickandmortyapp.di
 
 import com.kikepb7.rickandmortyapp.data.datasource.remote.ApiService
 import com.kikepb7.rickandmortyapp.data.datasource.remote.paging.CharactersPagingSource
+import com.kikepb7.rickandmortyapp.data.datasource.remote.paging.EpisodesPagingSource
 import com.kikepb7.rickandmortyapp.data.repository.CharactersRepositoryImpl
 import com.kikepb7.rickandmortyapp.data.repository.EpisodesRepositoryImpl
 import com.kikepb7.rickandmortyapp.data.repository.LocationsRepositoryImpl
@@ -35,7 +36,8 @@ val dataModule = module {
 
     factoryOf(::ApiService)
     factory <CharactersRepository> { CharactersRepositoryImpl(api = get(), charactersPagingSource = get(), rickMortyDatabase = get()) }
-    factory <EpisodesRepository> { EpisodesRepositoryImpl(api = get()) }
+    factory <EpisodesRepository> { EpisodesRepositoryImpl(api = get(), episodesPagingSource = get()) }
     factory <LocationsRepository> { LocationsRepositoryImpl(api = get()) }
     factoryOf(::CharactersPagingSource)
+    factoryOf(::EpisodesPagingSource)
 }

@@ -1,4 +1,4 @@
-package com.kikepb7.rickandmortyapp.ui.core.navigation
+package com.kikepb7.rickandmortyapp.ui.common.navigation
 
 sealed class Routes (val route: String) {
     data object Home: Routes("home")

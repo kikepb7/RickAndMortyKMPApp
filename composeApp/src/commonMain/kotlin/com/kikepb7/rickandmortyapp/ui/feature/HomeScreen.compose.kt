@@ -13,11 +13,11 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation.BottomBarItem
-import com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation.BottomBarItem.Characters
-import com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation.BottomBarItem.Episodes
-import com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation.BottomBarItem.Locations
-import com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation.NavigationBottomWrapper
+import com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation.BottomBarItem
+import com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation.BottomBarItem.Characters
+import com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation.BottomBarItem.Episodes
+import com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation.BottomBarItem.Locations
+import com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation.NavigationBottomWrapper
 
 @Composable
 fun HomeScreenView() {

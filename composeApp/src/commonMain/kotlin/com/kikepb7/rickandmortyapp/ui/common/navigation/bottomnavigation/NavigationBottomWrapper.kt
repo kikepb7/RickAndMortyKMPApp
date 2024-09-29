@@ -1,10 +1,10 @@
-package com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation
+package com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.kikepb7.rickandmortyapp.ui.core.navigation.Routes
+import com.kikepb7.rickandmortyapp.ui.common.navigation.Routes
 import com.kikepb7.rickandmortyapp.ui.feature.characters.CharactersScreen
 import com.kikepb7.rickandmortyapp.ui.feature.episodes.EpisodesScreen
 import com.kikepb7.rickandmortyapp.ui.feature.locations.LocationsScreen

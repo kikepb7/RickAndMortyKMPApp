@@ -1,4 +1,4 @@
-package com.kikepb7.rickandmortyapp.ui.core.navigation.bottomnavigation
+package com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -6,7 +6,7 @@ import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
-import com.kikepb7.rickandmortyapp.ui.core.navigation.Routes
+import com.kikepb7.rickandmortyapp.ui.common.navigation.Routes
 
 // Contract that needs to have a bottom bar item
 sealed class BottomBarItem {

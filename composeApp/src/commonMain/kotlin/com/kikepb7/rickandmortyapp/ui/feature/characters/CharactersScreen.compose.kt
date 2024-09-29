@@ -47,7 +47,7 @@ import app.cash.paging.compose.LazyPagingItems
 import app.cash.paging.compose.collectAsLazyPagingItems
 import coil3.compose.AsyncImage
 import com.kikepb7.rickandmortyapp.domain.feature.characters.model.CharacterModel
-import com.kikepb7.rickandmortyapp.ui.core.extensions.vertical
+import com.kikepb7.rickandmortyapp.ui.common.extensions.vertical
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI

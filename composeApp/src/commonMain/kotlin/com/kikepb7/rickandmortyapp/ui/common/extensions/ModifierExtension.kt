@@ -1,4 +1,4 @@
-package com.kikepb7.rickandmortyapp.ui.core.extensions
+package com.kikepb7.rickandmortyapp.ui.common.extensions
 
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout

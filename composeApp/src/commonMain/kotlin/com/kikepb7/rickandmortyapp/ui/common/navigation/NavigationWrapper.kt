@@ -1,4 +1,4 @@
-package com.kikepb7.rickandmortyapp.ui.core.navigation
+package com.kikepb7.rickandmortyapp.ui.common.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
