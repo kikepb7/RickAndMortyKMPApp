@@ -56,7 +56,9 @@ import rickandmortyapp.composeapp.generated.resources.rickandmorty_placeholder
 
 @OptIn(KoinExperimentalAPI::class)
 @Composable
-fun CharactersScreen() {
+fun CharactersScreen(
+    navigateToDetail: (CharacterModel) -> Unit
+) {
     val charactersViewModel = koinViewModel<CharactersViewModel>()
     val state by charactersViewModel.state.collectAsState()
     val characters = state.characters.collectAsLazyPagingItems()
@@ -75,7 +77,7 @@ fun CharactersScreen() {
             thickness = 1.dp,
             color = Color.DarkGray
         )
-        CharactersGridList(characters = characters)
+        CharactersGridList(characters = characters, navigateToDetail = navigateToDetail)
     }
 
 }
@@ -103,7 +105,8 @@ fun CharactersHeader() {
 
 @Composable
 fun CharactersGridList(
-    characters: LazyPagingItems<CharacterModel>
+    characters: LazyPagingItems<CharacterModel>,
+    navigateToDetail: (CharacterModel) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = Modifier
@@ -113,10 +116,6 @@ fun CharactersGridList(
         horizontalArrangement = Arrangement.spacedBy(space = 16.dp),
         verticalArrangement = Arrangement.spacedBy(space = 16.dp)
     ) {
-        /*item(span = { GridItemSpan(currentLineSpan = 2) }) {
-            CharacterOfTheDay(characterModel = state.characterOfTheDay)
-        }*/
-
         when {
             characters.loadState.refresh is LoadState.Loading && characters.itemCount == 0 -> {
                 // Initial
@@ -145,7 +144,11 @@ fun CharactersGridList(
             else -> {
                 items(count = characters.itemCount) { position ->
                     characters[position]?.let { characterModel ->
-                        CharacterItemList(characterModel = characterModel)
+                        CharacterItemList(
+                            characterModel = characterModel,
+                            onItemSelected = { character ->
+                                navigateToDetail(character) }
+                        )
                     }
                 }
                 if (characters.loadState.append is LoadState.Loading) {
@@ -170,7 +173,10 @@ fun CharactersGridList(
 }
 
 @Composable
-fun CharacterItemList(characterModel: CharacterModel) {
+fun CharacterItemList(
+    characterModel: CharacterModel,
+    onItemSelected: (CharacterModel) -> Unit
+) {
     Box(
         modifier = Modifier
             .clip(shape = RoundedCornerShape(percent = 24))
@@ -185,7 +191,7 @@ fun CharacterItemList(characterModel: CharacterModel) {
                 )
             )
             .fillMaxSize()
-            .clickable { }
+            .clickable { onItemSelected(characterModel) }
     ) {
         AsyncImage(
             model = characterModel.image,

@@ -20,7 +20,9 @@ import com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation.BottomB
 import com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation.NavigationBottomWrapper
 
 @Composable
-fun HomeScreenView() {
+fun HomeScreenView(
+    mainNavController: NavHostController
+) {
     val items = listOf(Episodes(), Characters(), Locations())
     val navController = rememberNavController()
 
@@ -28,7 +30,7 @@ fun HomeScreenView() {
         Box(
             modifier = Modifier.padding(paddingValues = padding)
         ) {
-            NavigationBottomWrapper(navController = navController)
+            NavigationBottomWrapper(navController = navController, mainNavController = mainNavController)
         }
     }
 }
