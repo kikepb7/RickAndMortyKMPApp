@@ -11,9 +11,13 @@ fun Preview() {
     CharacterOfTheDay(
         characterModel = CharacterModel(
             id = 3,
+            name = "Prueba",
             image = "",
             isAlive = true,
-            name = "Prueba"
+            species = "",
+            gender = "",
+            originName = "",
+            locationName = ""
         )
     )
 }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,12 +16,20 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,6 +37,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -51,13 +61,49 @@ fun CharactersScreen() {
     val state by charactersViewModel.state.collectAsState()
     val characters = state.characters.collectAsLazyPagingItems()
 
-    CharactersGridList(characters = characters, state = state)
+    Column(
+        modifier = Modifier
+            .padding(top = 8.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        CharactersHeader()
+        CharacterOfTheDay(characterModel = state.characterOfTheDay)
+        HorizontalDivider(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            thickness = 1.dp,
+            color = Color.DarkGray
+        )
+        CharactersGridList(characters = characters)
+    }
+
+}
+
+@Composable
+fun CharactersHeader() {
+    var characterSearched by remember { mutableStateOf(TextFieldValue("")) }
+
+    OutlinedTextField(
+        value = characterSearched,
+        onValueChange = { characterSearched = it },
+        label = { },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 8.dp),
+        shape = RoundedCornerShape(size = 8.dp),
+        trailingIcon = {
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = "Icono de búsqueda"
+            )
+        }
+    )
 }
 
 @Composable
 fun CharactersGridList(
-    characters: LazyPagingItems<CharacterModel>,
-    state: CharactersState
+    characters: LazyPagingItems<CharacterModel>
 ) {
     LazyVerticalGrid(
         modifier = Modifier
@@ -67,9 +113,9 @@ fun CharactersGridList(
         horizontalArrangement = Arrangement.spacedBy(space = 16.dp),
         verticalArrangement = Arrangement.spacedBy(space = 16.dp)
     ) {
-        item(span = { GridItemSpan(currentLineSpan = 2) }) {
+        /*item(span = { GridItemSpan(currentLineSpan = 2) }) {
             CharacterOfTheDay(characterModel = state.characterOfTheDay)
-        }
+        }*/
 
         when {
             characters.loadState.refresh is LoadState.Loading && characters.itemCount == 0 -> {
@@ -139,8 +185,7 @@ fun CharacterItemList(characterModel: CharacterModel) {
                 )
             )
             .fillMaxSize()
-            .clickable { },
-        contentAlignment = Alignment.BottomCenter
+            .clickable { }
     ) {
         AsyncImage(
             model = characterModel.image,
@@ -151,10 +196,12 @@ fun CharacterItemList(characterModel: CharacterModel) {
                 .height(150.dp),
             placeholder = painterResource(resource = Res.drawable.rickandmorty_placeholder)
         )
+        // NAME
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(60.dp)
+                .align(alignment = Alignment.BottomCenter)
                 .background(
                     brush = Brush
                         .verticalGradient(
@@ -173,6 +220,25 @@ fun CharacterItemList(characterModel: CharacterModel) {
                 fontSize = 18.sp
             )
         }
+        // GENDER
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            Text(
+                text = characterModel.gender,
+                color = Color.White,
+                fontSize = 14.sp,
+                modifier = Modifier
+                    .background(
+                        color = Color.Black.copy(alpha = 0.5f),
+                        shape = RoundedCornerShape(size = 12.dp)
+                    )
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+            )
+        }
     }
 }
 
@@ -183,7 +249,8 @@ fun CharacterOfTheDay(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(400.dp),
+            .padding(horizontal = 16.dp)
+            .height(200.dp),
         shape = RoundedCornerShape(percent = 12)
     ) {
         if (characterModel == null) {
@@ -217,7 +284,7 @@ fun CharacterOfTheDay(
                 )
                 Text(
                     text = characterModel.name,
-                    fontSize = 40.sp,
+                    fontSize = 20.sp,
                     maxLines = 1,
                     minLines = 1,
                     textAlign = TextAlign.Center,
