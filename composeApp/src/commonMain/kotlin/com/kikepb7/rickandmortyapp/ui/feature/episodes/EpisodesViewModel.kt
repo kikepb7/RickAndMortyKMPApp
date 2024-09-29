@@ -24,8 +24,21 @@ class EpisodesViewModel(
             state.copy(episodes = episodesRepository.getAllEpisodes().cachedIn(scope = viewModelScope))
         }
     }
+
+    fun onPlaySelected(url: String) {
+        _state.update { state ->
+            state.copy(playVideo = url)
+        }
+    }
+
+    fun onCloseVideo() {
+        _state.update { state ->
+            state.copy(playVideo = "")
+        }
+    }
 }
 
 data class EpisodesState(
-    val episodes: Flow<PagingData<EpisodeModel>> = emptyFlow()
+    val episodes: Flow<PagingData<EpisodeModel>> = emptyFlow(),
+    val playVideo: String = ""
 )

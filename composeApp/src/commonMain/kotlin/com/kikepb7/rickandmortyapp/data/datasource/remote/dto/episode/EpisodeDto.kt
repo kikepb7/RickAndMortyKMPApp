@@ -46,14 +46,14 @@ data class EpisodeDto(
     // TODO --> Complete with the correct video links!!
     private fun getVideoUrlFromSeason(season: SeasonEpisode): String {
         return when (season) {
-            SeasonEpisode.SEASON_1 -> ""
-            SeasonEpisode.SEASON_2 -> ""
-            SeasonEpisode.SEASON_3 -> ""
-            SeasonEpisode.SEASON_4 -> ""
-            SeasonEpisode.SEASON_5 -> ""
-            SeasonEpisode.SEASON_6 -> ""
-            SeasonEpisode.SEASON_7 -> ""
-            SeasonEpisode.UNKNOWN -> ""
+            SeasonEpisode.SEASON_1 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-6a8e6.appspot.com/o/rickandmorty-trailer.mp4?alt=media&token=887f30b9-f232-413e-a8cd-4ff20a41ff14"
+            SeasonEpisode.SEASON_2 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-6a8e6.appspot.com/o/rickandmorty-trailer.mp4?alt=media&token=887f30b9-f232-413e-a8cd-4ff20a41ff14"
+            SeasonEpisode.SEASON_3 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-6a8e6.appspot.com/o/rickandmorty-trailer.mp4?alt=media&token=887f30b9-f232-413e-a8cd-4ff20a41ff14"
+            SeasonEpisode.SEASON_4 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-6a8e6.appspot.com/o/rickandmorty-trailer.mp4?alt=media&token=887f30b9-f232-413e-a8cd-4ff20a41ff14"
+            SeasonEpisode.SEASON_5 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-6a8e6.appspot.com/o/rickandmorty-trailer.mp4?alt=media&token=887f30b9-f232-413e-a8cd-4ff20a41ff14"
+            SeasonEpisode.SEASON_6 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-6a8e6.appspot.com/o/rickandmorty-trailer.mp4?alt=media&token=887f30b9-f232-413e-a8cd-4ff20a41ff14"
+            SeasonEpisode.SEASON_7 -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-6a8e6.appspot.com/o/rickandmorty-trailer.mp4?alt=media&token=887f30b9-f232-413e-a8cd-4ff20a41ff14"
+            SeasonEpisode.UNKNOWN -> "https://firebasestorage.googleapis.com/v0/b/rickmortykmp-6a8e6.appspot.com/o/rickandmorty-trailer.mp4?alt=media&token=887f30b9-f232-413e-a8cd-4ff20a41ff14"
         }
     }
 }
