@@ -17,7 +17,8 @@ fun Preview() {
             species = "",
             gender = "",
             originName = "",
-            locationName = ""
+            locationName = "",
+            episodes = listOf("", "")
         )
     )
 }

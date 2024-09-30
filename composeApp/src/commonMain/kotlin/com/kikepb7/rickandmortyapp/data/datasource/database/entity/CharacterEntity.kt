@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.kikepb7.rickandmortyapp.domain.feature.characters.model.CharacterModel
 import com.kikepb7.rickandmortyapp.domain.feature.characters.model.CharacterOfTheDayModel
+import kotlinx.serialization.json.Json
 
 @Entity(tableName = "characteroftheday")
 data class CharacterEntity(
@@ -16,6 +17,7 @@ data class CharacterEntity(
     val originName: String,
     val locationName: String,
     val image: String,
+    val episodes: String,
     val selectedDay: String
 ) {
     fun toCharacterOfTheDayModel(): CharacterOfTheDayModel {
@@ -28,6 +30,7 @@ data class CharacterEntity(
                 gender = gender,
                 originName = originName,
                 locationName = locationName,
+                episodes = Json.decodeFromString<List<String>>(string = episodes),
                 image = image),
             selectedDay = selectedDay
         )
