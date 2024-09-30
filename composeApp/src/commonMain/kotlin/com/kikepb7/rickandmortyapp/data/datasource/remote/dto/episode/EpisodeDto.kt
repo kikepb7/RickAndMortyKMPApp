@@ -22,7 +22,7 @@ data class EpisodeDto(
             name = name,
             air_date = air_date,
             episode = episode,
-            characters = characters.map { url -> url.substringAfter(delimiter = "/") },
+            characters = characters.map { url -> url.substringAfterLast(delimiter = "/") },
             url = url,
             created = created,
             videoURL = video,

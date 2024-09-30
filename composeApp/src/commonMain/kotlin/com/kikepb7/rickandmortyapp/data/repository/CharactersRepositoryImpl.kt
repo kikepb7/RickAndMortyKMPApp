@@ -9,6 +9,7 @@ import com.kikepb7.rickandmortyapp.data.datasource.remote.paging.CharactersPagin
 import com.kikepb7.rickandmortyapp.domain.feature.characters.CharactersRepository
 import com.kikepb7.rickandmortyapp.domain.feature.characters.model.CharacterModel
 import com.kikepb7.rickandmortyapp.domain.feature.characters.model.CharacterOfTheDayModel
+import com.kikepb7.rickandmortyapp.domain.feature.episodes.model.EpisodeModel
 import kotlinx.coroutines.flow.Flow
 
 class CharactersRepositoryImpl(
@@ -39,5 +40,18 @@ class CharactersRepositoryImpl(
 
     override suspend fun getCharacterDB(): CharacterOfTheDayModel? {
         return rickMortyDatabase.getPreferencesDao().getCharacterOfTheDayDB()?.toCharacterOfTheDayModel()
+    }
+
+    override suspend fun getEpisodesForCharacter(episodes: List<String>): List<EpisodeModel> {
+        if (episodes.isEmpty()) return emptyList()
+
+        return if (episodes.size > 1) {
+            api.getEpisodes(episodes = episodes.joinToString(separator = ","))
+                .map { episodeDto ->
+                    episodeDto.toEpisodeModel()
+                }
+        } else {
+            listOf(api.getSingleEpisode(episodeId = episodes.first()).toEpisodeModel())
+        }
     }
 }

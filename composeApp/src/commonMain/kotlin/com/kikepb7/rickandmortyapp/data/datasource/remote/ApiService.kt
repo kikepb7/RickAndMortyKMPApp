@@ -2,6 +2,7 @@ package com.kikepb7.rickandmortyapp.data.datasource.remote
 
 import com.kikepb7.rickandmortyapp.data.datasource.remote.dto.character.CharacterDto
 import com.kikepb7.rickandmortyapp.data.datasource.remote.dto.character.CharactersWrapperDto
+import com.kikepb7.rickandmortyapp.data.datasource.remote.dto.episode.EpisodeDto
 import com.kikepb7.rickandmortyapp.data.datasource.remote.dto.episode.EpisodesWrapperDto
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -27,6 +28,14 @@ class ApiService(
         return httpClient.get("/api/episode/") {
             parameter(key = "page", value = page)
         }.body()
+    }
+
+    suspend fun getEpisodes(episodes: String): List<EpisodeDto> {
+        return httpClient.get("/api/episode/$episodes").body()
+    }
+
+    suspend fun getSingleEpisode(episodeId: String): EpisodeDto {
+        return httpClient.get("/api/episode/$episodeId").body()
     }
 
     // LOCATIONS

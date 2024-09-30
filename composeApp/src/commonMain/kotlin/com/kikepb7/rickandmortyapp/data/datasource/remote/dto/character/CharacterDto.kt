@@ -27,7 +27,7 @@ data class CharacterDto(
             gender = gender,
             originName = origin.name,
             locationName = location.name,
-            episodes = episode.map { it.substringAfter(delimiter = "/") },
+            episodes = episode.map { it.substringAfterLast(delimiter = "/") },
             image = image
         )
     }

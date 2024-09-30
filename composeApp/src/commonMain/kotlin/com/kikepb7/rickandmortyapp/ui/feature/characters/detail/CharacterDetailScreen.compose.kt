@@ -12,8 +12,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,7 +34,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.kikepb7.rickandmortyapp.domain.feature.characters.model.CharacterModel
+import com.kikepb7.rickandmortyapp.domain.feature.episodes.model.EpisodeModel
+import com.kikepb7.rickandmortyapp.ui.common.components.TextTitle
 import com.kikepb7.rickandmortyapp.ui.common.extensions.aliveBorder
+import com.kikepb7.rickandmortyapp.ui.theme.BackgroundPrimaryColor
+import com.kikepb7.rickandmortyapp.ui.theme.BackgroundSecondaryColor
+import com.kikepb7.rickandmortyapp.ui.theme.BackgroundTertiaryColor
+import com.kikepb7.rickandmortyapp.ui.theme.DefaultTextColor
+import com.kikepb7.rickandmortyapp.ui.theme.Green
+import com.kikepb7.rickandmortyapp.ui.theme.Pink
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -45,14 +58,25 @@ fun CharacterDetailScreen(
     val characterDetailViewModel =
         koinViewModel<CharacterDetailViewModel>(parameters = { parametersOf(characterModel) })
     val state by characterDetailViewModel.state.collectAsState()
+    val scrollState = rememberScrollState()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(color = Color.White)
+            .background(color = BackgroundPrimaryColor)
+            .verticalScroll(state = scrollState)
     ) {
         MainCharacterDetailHeader(characterModel = characterModel)
-        CharacterInfo(characterModel = characterModel)
+        Spacer(modifier = Modifier.height(16.dp))
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .clip(shape = RoundedCornerShape(topStartPercent = 10, topEndPercent = 10))
+                .background(color = BackgroundSecondaryColor)
+        ) {
+            CharacterInfo(characterModel = characterModel)
+            CharacterEpisodesList(episodes = state.episodes)
+        }
     }
 }
 
@@ -92,7 +116,7 @@ fun CharacterDetailHeader(characterModel: CharacterModel) {
         ) {
             Text(
                 text = characterModel.name,
-                color = Color.Black,
+                color = Pink,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -136,7 +160,7 @@ fun CharacterDetailHeader(characterModel: CharacterModel) {
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .clip(shape = RoundedCornerShape(percent = 30))
-                        .background(color = if (characterModel.isAlive) Color.Green else Color.Red)
+                        .background(color = if (characterModel.isAlive) Green else Color.Red)
                         .padding(horizontal = 6.dp, vertical = 2.dp)
                 )
             }
@@ -149,18 +173,15 @@ fun CharacterDetailHeader(characterModel: CharacterModel) {
 fun CharacterInfo(characterModel: CharacterModel) {
     ElevatedCard(
         modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth()
+            .padding(16.dp)
+            .fillMaxWidth(),
+        colors = CardDefaults.elevatedCardColors().copy(containerColor = BackgroundTertiaryColor)
     ) {
         Column(
             modifier = Modifier
                 .padding(16.dp)
         ) {
-            Text(
-                text = "ABOUT THE CHARACTER",
-                fontSize = 22.sp,
-                fontWeight = FontWeight.Bold
-            )
+            TextTitle(text = "ABOUT THE CHARACTER")
             Spacer(modifier = Modifier.height(8.dp))
             InfoDetail(title = "Origin: ", detail = characterModel.originName)
             Spacer(modifier = Modifier.height(2.dp))
@@ -174,12 +195,55 @@ fun InfoDetail(title: String, detail: String) {
     Row {
         Text(
             text = title,
-            color = Color.Black,
+            color = DefaultTextColor,
             fontWeight = FontWeight.Bold
         )
+        Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = detail,
-            color = Color.Black
+            color = Green
         )
     }
+}
+
+@Composable
+fun CharacterEpisodesList(episodes: List<EpisodeModel>?) {
+    ElevatedCard(
+        modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
+        colors = CardDefaults.elevatedCardColors(containerColor = BackgroundTertiaryColor)
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(16.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            if (episodes == null) {
+                CircularProgressIndicator(color = Green)
+            } else {
+                Column {
+                    TextTitle(text = "EPISODES")
+                    Spacer(modifier = Modifier.height(8.dp))
+                    episodes.forEach { episode ->
+                        EpisodeItem(episodeModel = episode)
+                        Spacer(modifier = Modifier.height(4.dp))
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun EpisodeItem(episodeModel: EpisodeModel) {
+    Text(
+        text = episodeModel.name,
+        color = Green,
+        fontWeight = FontWeight.Bold
+    )
+    Text(
+        text = episodeModel.episode,
+        color = DefaultTextColor
+    )
 }
