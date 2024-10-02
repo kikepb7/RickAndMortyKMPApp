@@ -223,7 +223,7 @@ fun CharacterEpisodesList(episodes: List<EpisodeModel>?) {
                 CircularProgressIndicator(color = Green)
             } else {
                 Column {
-                    TextTitle(text = "EPISODES")
+                    TextTitle(text = "episodes")
                     Spacer(modifier = Modifier.height(8.dp))
                     episodes.forEach { episode ->
                         EpisodeItem(episodeModel = episode)

@@ -1,6 +1,6 @@
 package com.kikepb7.rickandmortyapp.ui.feature.episodes
 
-import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,6 +27,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.kikepb7.rickandmortyapp.domain.feature.episodes.model.EpisodeModel
@@ -34,11 +37,15 @@ import com.kikepb7.rickandmortyapp.ui.common.components.PagingLoadingState
 import com.kikepb7.rickandmortyapp.ui.common.components.PagingType
 import com.kikepb7.rickandmortyapp.ui.common.components.PagingWrapper
 import com.kikepb7.rickandmortyapp.ui.common.components.VideoPlayer
+import com.kikepb7.rickandmortyapp.ui.theme.BackgroundPrimaryColor
+import com.kikepb7.rickandmortyapp.ui.theme.DefaultTextColor
+import com.kikepb7.rickandmortyapp.ui.theme.PlaceholderColor
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
 import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import rickandmortyapp.composeapp.generated.resources.Res
+import rickandmortyapp.composeapp.generated.resources.rickandmorty_fingers
 import rickandmortyapp.composeapp.generated.resources.season1
 import rickandmortyapp.composeapp.generated.resources.season2
 import rickandmortyapp.composeapp.generated.resources.season3
@@ -57,7 +64,9 @@ fun EpisodesScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = BackgroundPrimaryColor)
     ) {
+        Spacer(modifier = Modifier.height(16.dp))
         PagingWrapper(
             pagingType = PagingType.ROW,
             pagingItems = episodes,
@@ -68,7 +77,9 @@ fun EpisodesScreen() {
                 }
             }
         )
-        EpisodePlayer(playVideo = state.playVideo, onCloseVideo = { episodesViewModel.onCloseVideo() })
+        EpisodePlayer(
+            playVideo = state.playVideo,
+            onCloseVideo = { episodesViewModel.onCloseVideo() })
     }
 }
 
@@ -85,11 +96,17 @@ fun EpisodeItemList(
     ) {
         Image(
             modifier = Modifier
-                .height(200.dp)
+                .height(180.dp)
                 .fillMaxWidth(),
             contentDescription = "Episode image",
-            contentScale = ContentScale.Inside,
+            contentScale = ContentScale.Crop,
             painter = painterResource(resource = getSeasonImage(seasonEpisode = episode.season))
+        )
+        Spacer(modifier = Modifier.height(2.dp))
+        Text(
+            text = episode.episode,
+            color = DefaultTextColor,
+            fontWeight = FontWeight.Bold
         )
     }
 }
@@ -99,37 +116,65 @@ fun EpisodePlayer(
     playVideo: String,
     onCloseVideo: () -> Unit
 ) {
-    AnimatedVisibility (playVideo.isNotBlank()) {
-        ElevatedCard(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(250.dp)
-                .padding(16.dp),
-            shape = CardDefaults.elevatedShape
-        ) {
-            Box(
-                modifier = Modifier.background(Color.Black)
+    AnimatedContent(playVideo.isNotBlank()) { condition ->
+        if (condition) {
+            ElevatedCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(250.dp)
+                    .padding(16.dp),
+                shape = CardDefaults.elevatedShape
             ) {
                 Box(
-                    modifier = Modifier
-                        .padding(16.dp),
-                    contentAlignment = Alignment.Center
+                    modifier = Modifier.background(Color.Black)
                 ) {
-                    VideoPlayer(
-                        modifier = Modifier.fillMaxSize(),
-                        url = playVideo
-                    )
-                }
-                Row {
-                    Spacer(modifier = Modifier.weight(1f))
-                    Icon(
+                    Box(
                         modifier = Modifier
-                            .size(40.dp)
-                            .padding(8.dp)
-                            .clickable { onCloseVideo() },
-                        contentDescription = "Close icon",
-                        imageVector = Icons.Default.Close,
-                        tint = Color.Green
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        VideoPlayer(
+                            modifier = Modifier.fillMaxSize(),
+                            url = playVideo
+                        )
+                    }
+                    Row {
+                        Spacer(modifier = Modifier.weight(1f))
+                        Icon(
+                            modifier = Modifier
+                                .size(40.dp)
+                                .padding(8.dp)
+                                .clickable { onCloseVideo() },
+                            contentDescription = "Close icon",
+                            imageVector = Icons.Default.Close,
+                            tint = Color.Green
+                        )
+                    }
+                }
+            }
+        } else {
+            ElevatedCard(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                colors = CardDefaults.elevatedCardColors()
+                    .copy(containerColor = PlaceholderColor),
+            ) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Image(
+                        painter = painterResource(Res.drawable.rickandmorty_fingers),
+                        contentScale = ContentScale.Crop,
+                        contentDescription = null
+                    )
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(
+                        text = "Aw jeez, you gotta click the video!!",
+                        color = DefaultTextColor,
+                        fontStyle = FontStyle.Italic,
+                        modifier = Modifier
+                            .padding(16.dp)
                     )
                 }
             }
