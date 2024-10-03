@@ -44,6 +44,9 @@ kotlin {
 
             // KTOR
             implementation(libs.ktor.client.okhttp)
+
+            // SPLASH
+            implementation(libs.core.splashscreen)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
