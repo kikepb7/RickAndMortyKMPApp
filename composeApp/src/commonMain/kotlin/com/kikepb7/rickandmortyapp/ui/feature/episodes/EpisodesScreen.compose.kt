@@ -39,6 +39,7 @@ import com.kikepb7.rickandmortyapp.ui.common.components.PagingWrapper
 import com.kikepb7.rickandmortyapp.ui.common.components.VideoPlayer
 import com.kikepb7.rickandmortyapp.ui.theme.BackgroundPrimaryColor
 import com.kikepb7.rickandmortyapp.ui.theme.DefaultTextColor
+import com.kikepb7.rickandmortyapp.ui.theme.Green
 import com.kikepb7.rickandmortyapp.ui.theme.PlaceholderColor
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -147,7 +148,7 @@ fun EpisodePlayer(
                                 .clickable { onCloseVideo() },
                             contentDescription = "Close icon",
                             imageVector = Icons.Default.Close,
-                            tint = Color.Green
+                            tint = Green
                         )
                     }
                 }

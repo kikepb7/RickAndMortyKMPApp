@@ -41,9 +41,8 @@ fun TextTitle(text: String) {
         Text(
             modifier = Modifier.padding(bottom = 1.dp),
             text = text.uppercase(),
-//            fontFamily = Res.font.WubbaLubbaDubDub,
             fontWeight = FontWeight.Bold,
-            fontSize = 22.sp,
+            fontSize = 24.sp,
             color = DefaultTextColor,
             style = MaterialTheme.typography.titleMedium
         )

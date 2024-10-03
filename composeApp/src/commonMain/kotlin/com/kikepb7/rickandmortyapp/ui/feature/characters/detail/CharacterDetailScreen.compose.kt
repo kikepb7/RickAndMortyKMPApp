@@ -196,12 +196,13 @@ fun InfoDetail(title: String, detail: String) {
         Text(
             text = title,
             color = DefaultTextColor,
-            fontWeight = FontWeight.Bold
+            fontSize = 20.sp,
         )
         Spacer(modifier = Modifier.width(4.dp))
         Text(
             text = detail,
-            color = Green
+            color = Green,
+            fontSize = 16.sp
         )
     }
 }

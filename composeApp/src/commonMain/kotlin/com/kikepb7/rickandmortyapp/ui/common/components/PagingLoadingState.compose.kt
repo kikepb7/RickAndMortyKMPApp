@@ -6,7 +6,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import com.kikepb7.rickandmortyapp.ui.theme.Green
 
 @Composable
 fun PagingLoadingState() {
@@ -14,6 +14,6 @@ fun PagingLoadingState() {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        CircularProgressIndicator(color = Color.Green)
+        CircularProgressIndicator(color = Green)
     }
 }
