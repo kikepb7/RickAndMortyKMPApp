@@ -26,6 +26,7 @@ val PlaceholderColor
 
 val Pink = Color(0xFFFF577D)
 val Green = Color(0xFF5ccf92)
+val Red = Color(0xFFCF5C5C)
 
 val primaryWhite = Color(0xFFFFFFFF)
 val secondaryWhite = Color(0xFFEAE8EF)

@@ -17,9 +17,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,6 +41,7 @@ import com.kikepb7.rickandmortyapp.domain.feature.characters.model.CharacterMode
 import com.kikepb7.rickandmortyapp.domain.feature.episodes.model.EpisodeModel
 import com.kikepb7.rickandmortyapp.ui.common.components.TextTitle
 import com.kikepb7.rickandmortyapp.ui.common.extensions.aliveBorder
+import com.kikepb7.rickandmortyapp.ui.common.extensions.formatDate
 import com.kikepb7.rickandmortyapp.ui.theme.BackgroundPrimaryColor
 import com.kikepb7.rickandmortyapp.ui.theme.BackgroundSecondaryColor
 import com.kikepb7.rickandmortyapp.ui.theme.BackgroundTertiaryColor
@@ -48,6 +53,10 @@ import org.koin.compose.viewmodel.koinViewModel
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.parameter.parametersOf
 import rickandmortyapp.composeapp.generated.resources.Res
+import rickandmortyapp.composeapp.generated.resources.ic_female
+import rickandmortyapp.composeapp.generated.resources.ic_genderless
+import rickandmortyapp.composeapp.generated.resources.ic_male
+import rickandmortyapp.composeapp.generated.resources.ic_unkwnown
 import rickandmortyapp.composeapp.generated.resources.rickandmorty_background2
 
 @OptIn(KoinExperimentalAPI::class)
@@ -171,6 +180,12 @@ fun CharacterDetailHeader(characterModel: CharacterModel) {
 
 @Composable
 fun CharacterInfo(characterModel: CharacterModel) {
+    val gender = when (characterModel.gender) {
+        "Male" -> painterResource(Res.drawable.ic_male)
+        "Female" -> painterResource(Res.drawable.ic_female)
+        "Genderless" -> painterResource(Res.drawable.ic_genderless)
+        else -> painterResource(Res.drawable.ic_unkwnown)
+    }
     ElevatedCard(
         modifier = Modifier
             .padding(16.dp)
@@ -185,7 +200,16 @@ fun CharacterInfo(characterModel: CharacterModel) {
             Spacer(modifier = Modifier.height(8.dp))
             InfoDetail(title = "Origin: ", detail = characterModel.originName)
             Spacer(modifier = Modifier.height(2.dp))
-            InfoDetail(title = "Gender: ", detail = characterModel.gender)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                InfoDetail(title = "Gender: ", detail = characterModel.gender)
+                Spacer(modifier = Modifier.width(2.dp))
+                Icon(
+                    painter = gender,
+                    contentDescription = "Gender icon",
+                    tint = Green,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
     }
 }
@@ -238,13 +262,45 @@ fun CharacterEpisodesList(episodes: List<EpisodeModel>?) {
 
 @Composable
 fun EpisodeItem(episodeModel: EpisodeModel) {
-    Text(
-        text = episodeModel.name,
-        color = Green,
-        fontWeight = FontWeight.Bold
-    )
-    Text(
-        text = episodeModel.episode,
-        color = DefaultTextColor
-    )
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        OutlinedCard(
+            modifier = Modifier,
+            colors = CardDefaults.elevatedCardColors()
+                .copy(containerColor = BackgroundTertiaryColor)
+        ) {
+            Text(
+                text = episodeModel.episode,
+                color = Green,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(8.dp),
+            )
+        }
+
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+            contentDescription = "Arrow",
+            tint = DefaultTextColor,
+            modifier = Modifier.padding(horizontal = 8.dp)
+        )
+
+        OutlinedCard(
+            modifier = Modifier,
+            colors = CardDefaults.elevatedCardColors()
+                .copy(containerColor = BackgroundTertiaryColor)
+        ) {
+            Text(
+                text = formatDate(episodeModel.created),
+                color = DefaultTextColor,
+                modifier = Modifier
+                    .padding(8.dp),
+            )
+        }
+    }
 }

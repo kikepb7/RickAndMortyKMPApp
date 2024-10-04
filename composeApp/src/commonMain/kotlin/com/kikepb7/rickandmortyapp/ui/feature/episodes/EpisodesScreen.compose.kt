@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import app.cash.paging.compose.collectAsLazyPagingItems
 import com.kikepb7.rickandmortyapp.domain.feature.episodes.model.EpisodeModel
@@ -162,17 +164,22 @@ fun EpisodePlayer(
                     .copy(containerColor = PlaceholderColor),
             ) {
                 Column(
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center
                 ) {
                     Image(
                         painter = painterResource(Res.drawable.rickandmorty_fingers),
                         contentScale = ContentScale.Crop,
+                        modifier = Modifier.size(200.dp),
                         contentDescription = null
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Aw jeez, you gotta click the video!!",
+                        text = "Aw jeez, you gotta click the episode!!",
                         color = DefaultTextColor,
+                        textAlign = TextAlign.Center,
                         fontStyle = FontStyle.Italic,
                         modifier = Modifier
                             .padding(16.dp)
