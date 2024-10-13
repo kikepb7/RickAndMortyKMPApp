@@ -78,7 +78,6 @@ fun <T : Any> PagingWrapper(
                 }
             }
 
-
             if (pagingItems.loadState.append is LoadState.Loading) {
                 // Extra items view
                 extraItemsView()

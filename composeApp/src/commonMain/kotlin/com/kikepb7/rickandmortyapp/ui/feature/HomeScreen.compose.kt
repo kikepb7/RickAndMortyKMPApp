@@ -24,8 +24,9 @@ import com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation.BottomB
 import com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation.BottomBarItem.Episodes
 import com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation.BottomBarItem.Locations
 import com.kikepb7.rickandmortyapp.ui.common.navigation.bottomnavigation.NavigationBottomWrapper
-import com.kikepb7.rickandmortyapp.ui.theme.BackgroundSecondaryColor
+import com.kikepb7.rickandmortyapp.ui.theme.BackgroundPrimaryColor
 import com.kikepb7.rickandmortyapp.ui.theme.BackgroundTertiaryColor
+import com.kikepb7.rickandmortyapp.ui.theme.BottomBarColor
 import com.kikepb7.rickandmortyapp.ui.theme.DefaultTextColor
 import com.kikepb7.rickandmortyapp.ui.theme.Green
 import org.jetbrains.compose.resources.painterResource
@@ -64,7 +65,7 @@ fun HomeScreenView(
 fun TopBar() {
     Box(modifier = Modifier
         .fillMaxWidth()
-        .background(color = BackgroundSecondaryColor),
+        .background(color = BackgroundPrimaryColor),
         contentAlignment = Alignment.TopCenter
     ) {
         Image(
@@ -82,7 +83,7 @@ fun BottomNavigation(items: List<BottomBarItem>, navController: NavHostControlle
     val currentDestination = navBackStackEntry?.destination
 
     NavigationBar(
-        containerColor = BackgroundSecondaryColor,
+        containerColor = BottomBarColor,
         contentColor = Green
     ) {
         items.forEach { item ->

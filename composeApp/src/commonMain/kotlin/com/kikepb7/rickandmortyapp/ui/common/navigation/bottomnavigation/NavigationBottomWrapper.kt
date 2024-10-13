@@ -25,7 +25,7 @@ fun NavigationBottomWrapper(
         composable(route = Routes.Characters.route) {
             CharactersScreen(
                 navigateToDetail = { characterModel ->
-                    val encode = Json.encodeToString(characterModel)
+                    val encode = Json.encodeToString(value = characterModel)
                     mainNavController.navigate(route = CharacterDetail(characterModel = encode))
                 }
             )

@@ -43,8 +43,8 @@ import com.kikepb7.rickandmortyapp.ui.common.components.TextTitle
 import com.kikepb7.rickandmortyapp.ui.common.extensions.aliveBorder
 import com.kikepb7.rickandmortyapp.ui.common.extensions.formatDate
 import com.kikepb7.rickandmortyapp.ui.theme.BackgroundPrimaryColor
-import com.kikepb7.rickandmortyapp.ui.theme.BackgroundSecondaryColor
 import com.kikepb7.rickandmortyapp.ui.theme.BackgroundTertiaryColor
+import com.kikepb7.rickandmortyapp.ui.theme.BottomBarColor
 import com.kikepb7.rickandmortyapp.ui.theme.DefaultTextColor
 import com.kikepb7.rickandmortyapp.ui.theme.Green
 import com.kikepb7.rickandmortyapp.ui.theme.Pink
@@ -81,7 +81,7 @@ fun CharacterDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .clip(shape = RoundedCornerShape(topStartPercent = 10, topEndPercent = 10))
-                .background(color = BackgroundSecondaryColor)
+                .background(color = BottomBarColor)
         ) {
             CharacterInfo(characterModel = characterModel)
             CharacterEpisodesList(episodes = state.episodes)

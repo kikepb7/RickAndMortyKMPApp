@@ -7,7 +7,7 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
-class GetRandomCharacter(
+class GetRandomCharacterUseCase(
     private val charactersRepository: CharactersRepository
 ) {
     suspend operator fun invoke(): CharacterModel {

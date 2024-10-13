@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.kikepb7.rickandmortyapp.domain.feature.characters.CharactersRepository
 import com.kikepb7.rickandmortyapp.domain.feature.characters.model.CharacterModel
-import com.kikepb7.rickandmortyapp.domain.feature.characters.usecase.GetRandomCharacter
+import com.kikepb7.rickandmortyapp.domain.feature.characters.usecase.GetRandomCharacterUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.Flow
@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CharactersViewModel(
-    val getRandomCharacter: GetRandomCharacter,
+    val getRandomCharacterUseCase: GetRandomCharacterUseCase,
     private val charactersRepository: CharactersRepository
 ): ViewModel() {
 
@@ -28,7 +28,7 @@ class CharactersViewModel(
     init {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
-                getRandomCharacter()
+                getRandomCharacterUseCase()
             }
 
             _state.update { state ->
