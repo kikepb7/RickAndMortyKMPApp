@@ -6,7 +6,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,7 +14,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import app.cash.paging.compose.collectAsLazyPagingItems
@@ -38,7 +35,6 @@ import com.kikepb7.rickandmortyapp.ui.common.components.PagingWrapper
 import com.kikepb7.rickandmortyapp.ui.theme.BackgroundCardColor
 import com.kikepb7.rickandmortyapp.ui.theme.BackgroundPrimaryColor
 import com.kikepb7.rickandmortyapp.ui.theme.DarkGreen
-import com.kikepb7.rickandmortyapp.ui.theme.DefaultTextColor
 import com.kikepb7.rickandmortyapp.ui.theme.Green
 import com.kikepb7.rickandmortyapp.ui.theme.Red
 import org.jetbrains.compose.resources.painterResource
@@ -97,7 +93,7 @@ fun CharacterCard(
             .height(150.dp)
             .padding(horizontal = 16.dp, vertical = 8.dp)
             .clickable { onItemSelected(characterModel) }
-            .clip(shape = RoundedCornerShape(percent = 24)),
+            .clip(shape = RoundedCornerShape(size = 16.dp)),
         colors = CardDefaults.cardColors(containerColor = BackgroundCardColor)
     ) {
         Row {
@@ -162,40 +158,4 @@ fun CharacterItemList(
         onItemSelected = onItemSelected,
         modifier = Modifier.fillMaxSize()
     )
-}
-
-@Composable
-fun CharacterOfTheDay(
-    characterModel: CharacterModel? = null,
-    onItemSelected: (CharacterModel) -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(color = BackgroundPrimaryColor),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Character of the DAY",
-            color = DefaultTextColor,
-            fontSize = 24.sp,
-            fontWeight = FontWeight.SemiBold
-        )
-        Spacer(modifier = Modifier.height(6.dp))
-
-        if (characterModel == null) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator(color = Green)
-            }
-        } else {
-            CharacterCard(
-                characterModel = characterModel,
-                onItemSelected = onItemSelected,
-                modifier = Modifier.size(200.dp)
-            )
-        }
-    }
 }
